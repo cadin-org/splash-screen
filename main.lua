@@ -19,49 +19,50 @@ local function splash_colored_text(r, g, b, text)
   love.graphics.print(text, x + (w / 2) - (string.len(text) * 24 / 2), y + (h / 2) - 24)
 end
 
-local function draw_splash_screen(r, g, b, text)
-  function love.draw()
-    local x, y, w, h = middle_screen_pos()
-
-    love.graphics.setColor(love.math.colorFromBytes(30, 30, 46))
-    love.graphics.rectangle('fill', x, y, w, h, 12)
-
-    if text then
-      splash_colored_text(r, g, b, text)
-    end
-  end
-end
-
 function love.load()
-  local canvas = love.graphics.newCanvas(800, 600)
-  love.graphics.setCanvas(canvas)
-
-  -- Why this?
-  love.graphics.clear(0, 0, 0, 0)
-
-  local r, g, b = love.math.colorFromBytes(24, 24, 37)
-  love.graphics.setBackgroundColor(r, g, b)
-
-  local fira_mono = love.graphics.newFont('assets/fonts/FiraMono-Medium.ttf', 48)
-  love.graphics.setFont(fira_mono)
-
-  love.graphics.setCanvas()
+    -- local canvas = love.graphics.newCanvas(800, 600)
+    -- love.graphics.setCanvas(canvas)
+    
+    -- Why this?
+    -- love.graphics.clear(0, 0, 0, 0)
+    
+    local r, g, b = love.math.colorFromBytes(24, 24, 37)
+    love.graphics.setBackgroundColor(r, g, b)
+    
+    local fira_mono = love.graphics.newFont('assets/fonts/FiraMono-Medium.ttf', 48)
+    love.graphics.setFont(fira_mono)
+    
+    -- love.graphics.setCanvas()
 end
-
-local dtotal = 0
 
 function love.update(dt)
-  dtotal = dtotal + dt
 
-  draw_splash_screen()
+end
 
-  if dtotal >= 3 then
-    draw_splash_screen(243, 139, 168, 'LÖVE')
-  end
-  if dtotal >= 6 then
-    draw_splash_screen(205, 214, 244, 'cadin')
-  end
-  if dtotal >= 9 then
+function love.draw()
+    local time = love.timer.getTime()
+    local function draw_splash_screen(r, g, b, text)
+        local x, y, w, h = middle_screen_pos()
+
+        love.graphics.setColor(love.math.colorFromBytes(30, 30, 46))
+        love.graphics.rectangle('fill', x, y, w, h, 12)
+
+        if text then
+            splash_colored_text(r, g, b, text)
+        end
+    end
     draw_splash_screen()
-  end
+    
+    if time >= 3 then
+        draw_splash_screen(243, 139, 168, 'LÖVE')
+    end
+    if time >= 6 then
+        draw_splash_screen(205, 214, 244, 'cadin')
+    end
+    if time >= 9 then
+        draw_splash_screen()
+    end
+    if time >= 12 then
+        love.event.quit()
+    end
 end
