@@ -38,13 +38,13 @@ function M.load()
   local r, g, b = love.math.colorFromBytes(24, 24, 37)
   love.graphics.setBackgroundColor(r, g, b)
 
-  local fira_mono = love.graphics.newFont('assets/fonts/FiraMono-Medium.ttf', 48)
+  -- Assumes the following path on the root
+  local font_asset_path = 'assets/fonts/FiraMono-Medium.ttf'
+  local fira_mono = love.graphics.newFont(font_asset_path, 48)
   love.graphics.setFont(fira_mono)
 end
 
-function M.draw()
-  local time = love.timer.getTime()
-
+function M.draw(time)
   draw_splash_screen()
 
   if time >= 3 then
@@ -55,9 +55,6 @@ function M.draw()
   end
   if time >= 9 then
     draw_splash_screen()
-  end
-  if time >= 12 then
-    love.event.quit()
   end
 end
 
