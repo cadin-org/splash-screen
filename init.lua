@@ -13,13 +13,23 @@ local function middle_screen_pos()
   return x, y, width, height
 end
 
+local function text_center(text)
+  local current_font = love.graphics.getFont()
+  local text_height = current_font:getHeight()
+  local text_width = current_font:getWidth(text)
+
+  local x = (love.graphics.getWidth() - text_width) / 2
+  local y = (love.graphics.getHeight() - text_height) / 2
+
+  return x, y, text_width
+end
+
 local function splash_colored_text(r, g, b, text)
   local red, green, blue = love.math.colorFromBytes(r, g, b)
-  local x, y, w, h = middle_screen_pos()
+  local x, y, text_width = text_center(text)
 
   love.graphics.setColor(red, green, blue)
-  -- TODO: Better handle text position
-  love.graphics.print(text, x + (w / 2) - (string.len(text) * 24 / 2), y + (h / 2) - 24)
+  love.graphics.printf(text, x, y, text_width, 'center')
   -- TODO: Add fade in/fade out effect
 end
 
