@@ -1,5 +1,9 @@
 local M = {}
 
+M.canvas = nil
+M.x = nil
+M.y = nil
+
 local function text_center(text)
   local current_font = love.graphics.getFont()
   local text_height = current_font:getHeight()
@@ -21,32 +25,28 @@ local function splash_colored_text(r, g, b, text)
   -- TODO: Add fade in/fade out effect
 end
 
-function M.new(self, width, height)
+function M.new(width, height)
   local x_center = love.graphics.getWidth() / 2
   local y_center = love.graphics.getHeight() / 2
 
-  local x = x_center - (width / 2)
-  local y = y_center - (height / 2)
+  M.x = x_center - (width / 2)
+  M.y = y_center - (height / 2)
 
-  local canvas = love.graphics.newCanvas(width, height)
-  love.graphics.setCanvas(canvas)
+  M.canvas = love.graphics.newCanvas(width, height)
+  love.graphics.setCanvas(M.canvas)
   love.graphics.clear(love.math.colorFromBytes(30, 30, 46))
   love.graphics.setCanvas()
-
-  self.canvas = canvas
-  self.x = x
-  self.y = y
 end
 
-function M.start(self, time)
-  love.graphics.draw(self.canvas, self.x, self.y)
+function M.start(time)
+  love.graphics.draw(M.canvas, M.x, M.y)
 
   if time >= 3 then
-    love.graphics.draw(self.canvas, self.x, self.y)
+    love.graphics.draw(M.canvas, M.x, M.y)
     splash_colored_text(243, 139, 168, 'LÖVE')
   end
   if time >= 6 then
-    love.graphics.draw(self.canvas, self.x, self.y)
+    love.graphics.draw(M.canvas, M.x, M.y)
     splash_colored_text(205, 214, 244, 'cadin')
   end
   if time >= 9 then
