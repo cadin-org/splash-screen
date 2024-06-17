@@ -25,7 +25,7 @@ local function splash_colored_text(r, g, b, text)
   -- TODO: Add fade in/fade out effect
 end
 
-function M.new(width, height)
+function M.load(width, height)
   local x_center = love.graphics.getWidth() / 2
   local y_center = love.graphics.getHeight() / 2
 
@@ -38,19 +38,18 @@ function M.new(width, height)
   love.graphics.setCanvas()
 end
 
+-- Is love.timer the idiomatic way?
 function M.start(time)
+  if time >= 9 then
+    return
+  end
+
   love.graphics.draw(M.canvas, M.x, M.y)
 
-  if time >= 3 then
-    love.graphics.draw(M.canvas, M.x, M.y)
+  if time >= 3 and time < 6 then
     splash_colored_text(243, 139, 168, 'LÖVE')
-  end
-  if time >= 6 then
-    love.graphics.draw(M.canvas, M.x, M.y)
+  elseif time >= 6 and time < 9 then
     splash_colored_text(205, 214, 244, 'cadin')
-  end
-  if time >= 9 then
-    love.graphics.clear()
   end
 end
 
